@@ -30,4 +30,7 @@ public class BloodDetailsDAO {
 		// return null;
 		return bloodDetailsRepository.findById(bdid);
 	}
+	public List<BloodDetails>  getBloodBankByLocation(String location){
+		return bloodDetailsRepository.getBloodBankByLocation(location);
+	}
 }

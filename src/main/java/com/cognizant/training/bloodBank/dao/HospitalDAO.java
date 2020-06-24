@@ -17,8 +17,12 @@ public class HospitalDAO {
 		return hospitalRepository.save(hospital);
 	}
 	
-	public void delete(Hospital hospital) {
-		hospitalRepository.delete(hospital);
+	public void delete(Long hospitalId) {
+		hospitalRepository.deleteById(hospitalId);
+	}
+	
+	public int deleteByEmail(String email) {
+		return hospitalRepository.deleteByEmail(email);
 	}
 	
 	public List<Hospital> findAll(){
@@ -29,7 +33,17 @@ public class HospitalDAO {
 		// return null;
 		return hospitalRepository.findById(hospitalid);
 	}
-	public  boolean login(Hospital hospital) {
-		return hospitalRepository.bloodBankLogin(hospital.getEmail(),hospital.getPassword())==null?false:true;
+	
+	public Hospital findOneByEmail(String email) {
+		// return null;
+		return hospitalRepository.findOneByEmail(email);
+	}
+	public  Hospital login(Hospital hospital) {
+		System.out.println(hospital.getEmail()+" "+hospital.getPassword());
+		return hospitalRepository.bloodBankLogin(hospital.getEmail(),hospital.getPassword());
+	}
+	
+	public List<Hospital>  getHospitalByLocation(String location){
+		return hospitalRepository.getHospitalByLocation(location);
 	}
 }

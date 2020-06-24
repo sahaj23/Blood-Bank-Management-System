@@ -33,6 +33,10 @@ public class BloodDetailsController {
 		return bloodDetailsDAO.save(bd);
 	}
 
+	@GetMapping("/blood-details/{location}")
+	public List<BloodDetails> getBloodBankByLocation(@PathVariable(value = "location") String location){
+		return bloodDetailsDAO.getBloodBankByLocation(location);
+	}
 	/* get all blood banks */
 	@GetMapping("/blood-details")
 	public List<BloodDetails> getAllBloodDetails() {

@@ -22,6 +22,10 @@ public class DonorDAO {
 		donorRepository.delete(donor);
 	}
 	
+	public Donor findOneByEmail(String email) {
+		// return null;
+		return donorRepository.findOneByEmail(email);
+	}
 	public List<Donor> findAll(){
 		return donorRepository.findAll();
 	}
@@ -30,7 +34,11 @@ public class DonorDAO {
 		// return null;
 		return donorRepository.findById(did);
 	}
-	public  boolean login(Donor donor) {
-		return donorRepository.donorLogin(donor.getEmail(),donor.getPassword())==null?false:true;
+	public  Donor login(Donor donor) {
+		return donorRepository.donorLogin(donor.getEmail(),donor.getPassword());
+	}
+	
+	public List<Donor>  getDonorByLocation(String location){
+		return donorRepository.getDonorByLocation(location);
 	}
 }

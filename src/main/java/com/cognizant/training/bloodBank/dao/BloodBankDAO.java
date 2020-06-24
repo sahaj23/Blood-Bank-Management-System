@@ -22,15 +22,27 @@ public class BloodBankDAO {
 		bloodBankRepository.delete(bb);
 	}
 	
+	public int deleteByEmail(String email) {
+		return bloodBankRepository.deleteByEmail(email);
+	}
 	public List<BloodBank> findAll(){
 		return bloodBankRepository.findAll();
 	}
 	
+	public BloodBank findOneByEmail(String email) {
+		// return null;
+		return bloodBankRepository.findOneByEmail(email);
+	}
 	public Optional<BloodBank> findOne(Long bbid) {
 		// return null;
 		return bloodBankRepository.findById(bbid);
 	}
-	public  boolean login(BloodBank bb) {
-		return bloodBankRepository.bloodBankLogin(bb.getEmail(),bb.getPassword())==null?false:true;
+	public  BloodBank login(BloodBank bb) {
+		return bloodBankRepository.bloodBankLogin(bb.getEmail(),bb.getPassword());
+	}
+	
+	public List<BloodBank>  getBloodBankByLocation(String location){
+		System.out.println(location);
+		return bloodBankRepository.getBloodBankByLocation(location);
 	}
 }

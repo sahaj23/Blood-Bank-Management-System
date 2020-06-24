@@ -1,7 +1,6 @@
 package com.cognizant.training.bloodBank.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognizant.training.bloodBank.dao.HospitalDAO;
-import com.cognizant.training.bloodBank.model.BloodBank;
 import com.cognizant.training.bloodBank.model.Hospital;
 
 @RestController
@@ -29,46 +27,48 @@ public class HospitalController {
 
 	/* to save a blood bank */
 	@PostMapping("/hospital")
-	public Hospital createBloodBank(@Valid @RequestBody Hospital bb) {
+	public Hospital createHospital(@Valid @RequestBody Hospital hospital) {
 		
-		return hospitalDAO.save(bb);
+		return hospitalDAO.save(hospital);
 	}
 
 	/* get all blood banks */
 	@GetMapping("/hospital")
-	public List<Hospital> getAllBloodBanks() {
+	public List<Hospital> getAllHospitals() {
 		System.out.println("getAll");
 		return hospitalDAO.findAll();
 	}
 	
+	
+	@GetMapping("/hospital/{location}")
+	public List<Hospital> getHospitalByLocation(@PathVariable(value = "location") String location){
+		return hospitalDAO.getHospitalByLocation(location);
+	}
 	/* Delete a product */
-	@DeleteMapping("/hospital/{id}")
-	public ResponseEntity<Hospital> deleteBloodBank(@PathVariable(value = "id") Long hospitalId) {
+	@DeleteMapping("/hospital/{email}")
+	public ResponseEntity<Hospital> deleteHospital(@PathVariable(value = "email") String email) {
 
-		Optional<Hospital> hospital = hospitalDAO.findOne(hospitalId);
-		if (hospital == null) {
-			return ResponseEntity.notFound().build();
-		}
-		hospitalDAO.delete(hospital.get());
+		
+		hospitalDAO.deleteByEmail(email);
 
 		return ResponseEntity.ok().build();
 
 	}
 	
 	@PostMapping("/hospital/login")
-	public boolean login(@Valid @RequestBody Hospital bb) {
+	public Hospital login(@Valid @RequestBody Hospital bb) {
 		return hospitalDAO.login(bb);
 	}
 	
-	@PutMapping("/hospital/")
-	public ResponseEntity<Hospital> updateBloodBank(@Valid @RequestBody Hospital hospital) {
+	@PutMapping("/hospital")
+	public ResponseEntity<Hospital> updateHospital(@Valid @RequestBody Hospital hospital) {
 
-		Optional<Hospital> hospitalOld = hospitalDAO.findOne(hospital.getHospital_id());
+		Hospital hospitalOld = hospitalDAO.findOneByEmail(hospital.getEmail());
 		if (hospitalOld == null) {
 			return ResponseEntity.notFound().build();
 		}
-		hospital.setHospital_id(hospitalOld.get().getHospital_id());
-		
+		hospital.setHospital_id(hospitalOld.getHospital_id());
+		hospital.setPassword(hospitalOld.getPassword());
 		hospitalDAO.save(hospital);
 		 return ResponseEntity.ok().build();
 

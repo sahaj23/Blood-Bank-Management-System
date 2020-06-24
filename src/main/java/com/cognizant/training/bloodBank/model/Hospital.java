@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name="blood_bank")
+@Table(name="hospital")
 @EntityListeners(AuditingEntityListener.class)
 public class Hospital {
 

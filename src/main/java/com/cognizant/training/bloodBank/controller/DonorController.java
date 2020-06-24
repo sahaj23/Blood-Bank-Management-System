@@ -55,19 +55,19 @@ public class DonorController {
 	}
 	
 	@PostMapping("/donor/login")
-	public boolean login(@Valid @RequestBody Donor donor) {
+	public Donor login(@Valid @RequestBody Donor donor) {
 		return donorDAO.login(donor);
 	}
 	
 	@PutMapping("/donor/")
 	public ResponseEntity<Donor> updateDonor(@Valid @RequestBody Donor donor) {
 
-		Optional<Donor> donorOld = donorDAO.findOne(donor.getDonor_id());
+		Donor donorOld = donorDAO.findOneByEmail(donor.getEmail());
 		if (donorOld == null) {
 			return ResponseEntity.notFound().build();
 		}
-		donor.setDonor_id(donorOld.get().getDonor_id());
-		
+		donor.setDonor_id(donorOld.getDonor_id());
+		donor.setPassword(donorOld.getPassword());;
 		donorDAO.save(donor);
 		 return ResponseEntity.ok().build();
 
